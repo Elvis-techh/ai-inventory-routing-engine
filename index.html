@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Storage Management System</title>
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <link rel="stylesheet" href="/styles.css" />
+  <script src="/app.js" defer></script>
+</head>
+
+<body>
+
+  <div class="card">
+
+    <header class="topbar">
+      <a class="brand" href="#">
+        <span class="logo-box"></span>
+        <span class="brand-text">
+          <b>Internal</b><br />Search
+        </span>
+      </a>
+
+      <nav class="nav">
+        <div class="nav-item nav-item--putaway">
+          <a href="#" id="nav-putaway" class="nav-link nav-link--main active">
+            Put-away <span class="nav-caret" aria-hidden="true">▾</span>
+          </a>
+          <div class="nav-dropdown">
+            <button type="button" id="nav-search" class="nav-dropdown-item">Search</button>
+          </div>
+        </div>
+
+        <a href="#" id="nav-instructions" class="nav-link nav-link--main">Instructions</a>
+        <a href="#" id="nav-report" class="nav-link nav-link--main">Report an Issue</a>
+        <a href="#" id="nav-debug" class="nav-link nav-link--main">Debug</a>
+      </nav>
+      <span id="user-badge" class="user-badge" title="Not signed in"></span>
+    </header>
+
+    <main class="hero">
+
+      <form id="lookup-form" class="searchbar" autocomplete="off">
+        <input id="lookup-input" type="text" inputmode="numeric" placeholder="Insert ID or Reference"
+          aria-label="Search number" maxlength="20" />
+
+        <input id="qty-input" type="text" inputmode="numeric" pattern="[0-9]*" placeholder="Insert Quantity"
+          aria-label="Insert quantity" disabled aria-hidden="true" maxlength="2" />
+
+        <button type="submit">Search</button>
+      </form>
+
+      <div id="lookup-actions" class="actions hidden">
+        <button id="btn-print" type="button" class="btn">Print Labels</button>
+      </div>
+
+      <div id="search-loading" class="loading hidden" aria-live="polite">
+        <span class="loading-spinner" aria-hidden="true"></span>
+        <span class="loading-text">Looking up storage locations…</span>
+      </div>
+
+      <div id="search-status" class="search-status hidden" aria-live="polite">
+        <span class="status-icon" id="status-icon"></span>
+        <div class="status-body">
+          <span class="status-message" id="status-message"></span>
+          <div class="status-tags" id="status-tags"></div>
+        </div>
+      </div>
+
+      <section id="results" class="results hidden" aria-live="polite">
+        <div class="col">
+          <h4>Dimensions</h4>
+          <dl class="kv">
+            <dt>Height</dt>
+            <dd id="res-height">—</dd>
+            <dt>Width</dt>
+            <dd id="res-width">—</dd>
+            <dt>Length</dt>
+            <dd id="res-length">—</dd>
+            <dt>Total Cube</dt>
+            <dd id="res-cube">—</dd>
+          </dl>
+        </div>
+        <div class="col">
+          <h4>Identifiers</h4>
+          <dl class="kv">
+            <dt>SKU</dt>
+            <dd id="res-item">—</dd>
+            <dt>Zone Area</dt>
+            <dd id="res-spr">—</dd>
+            <dt>Product Class</dt>
+            <dd id="res-cn">—</dd>
+          </dl>
+        </div>
+        <div class="col">
+          <h4>Suggested locations</h4>
+          <ul class="locs">
+            <li id="loc-1">—</li>
+            <li id="loc-2">—</li>
+            <li id="loc-3">—</li>
+          </ul>
+        </div>
+      </section>
+
+      <section id="report-section" class="hidden">
+        <h3 class="section-title">Support Contacts</h3>
+        <div class="info-grid">
+          <div>
+            <dl class="kv">
+              <dt>Name</dt>
+              <dd>System Administrator</dd>
+              <dt>Email</dt>
+              <dd><a href="mailto:admin@company.com">admin@company.com</a></dd>
+              <dt>Support Channel</dt>
+              <dd>
+                <a href="#" target="_blank" rel="noopener noreferrer">#it-support-channel</a>
+              </dd>
+            </dl>
+          </div>
+          <div class="note">
+            <p>
+              <strong>Tip:</strong> When reporting, include reference IDs, time of scan, and a screenshot of any error.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section id="instructions-section" class="hidden">
+        <h3 class="section-title">How to use this tool</h3>
+        <ol class="steps">
+          <li>Select <strong>Put-away</strong>, scan the <em>Reference ID</em>, and click <strong>Search</strong>.</li>
+          <li>Enter the <em>Quantity</em> and submit to generate locations.</li>
+          <li>Review the information and print labels as needed.</li>
+          <li>If an error occurs, use the <strong>Report an Issue</strong> tab.</li>
+        </ol>
+      </section>
+
+      <section id="debug-section" class="hidden">
+        <h3 class="section-title">Debug Tools</h3>
+        <div class="debug-controls">
+          <div class="debug-toolbar">
+            <button type="button" id="btn-load-db" class="btn btn--debug">Load Database</button>
+            <button type="button" id="btn-check-health" class="btn btn--debug">System Status</button>
+            <button type="button" id="btn-whoami" class="btn btn--debug">Session Info</button>
+            <select id="debug-collection-filter">
+              <option value="">All Collections</option>
+              <option value="leases">Leases</option>
+              <option value="reservations">Reservations</option>
+            </select>
+            <label class="debug-limit-label">
+              Limit
+              <input type="number" id="debug-limit" value="20" min="1" max="100" />
+            </label>
+          </div>
+          <div id="debug-status" class="debug-status"></div>
+        </div>
+        <div id="debug-output" class="debug-output"></div>
+      </section>
+
+    </main>
+  </div>
+
+</body>
+
+</html>
