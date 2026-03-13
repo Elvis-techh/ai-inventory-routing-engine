@@ -1,0 +1,13 @@
+# Top-level application dependencies
+Flask>=3.1,<4
+gunicorn>=23.0,<24
+
+# Google Cloud / Firebase
+firebase-admin>=6.6,<7
+google-cloud-bigquery>=3.25,<4
+google-cloud-firestore>=2.19,<3
+google-cloud-storage>=3.7,<4
+
+# Dev / formatting tools
+beautysh>=6.4,<7
+black>=25.0,<26
